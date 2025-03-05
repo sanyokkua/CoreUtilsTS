@@ -1,0 +1,2 @@
+# CoreUtilsTS
+Simple Typescript Utils
