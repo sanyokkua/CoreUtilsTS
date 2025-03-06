@@ -15,7 +15,12 @@
         "lint": "tsc --noEmit && eslint --fix",
         "verify": "npm run clean && npm run format && git add . && npm run check:format && npm run check:lint && npm run test && npm run clean",
         "prepare": "husky",
-        "package": "npm run build && npm pack"
+        "package": "npm run build && npm pack",
+        "ci_clean": "npm run clean",
+        "ci_lint": "npm run check:lint",
+        "ci_check_format": "npm run check:format",
+        "ci_build": "npm run build",
+        "ci_test": "npm run test"
     },
     "repository": {
         "type": "git",
