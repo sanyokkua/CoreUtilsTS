@@ -100,7 +100,7 @@ export function splitString(value: string, separator: LineSeparator = LineSepara
     logger.debug(
         `Passed arguments to splitString: in - ${safeExtractText(value)}, separator - ${safeExtractText(separator)}`,
     );
-    return value.split(separator);
+    return value;
 }
 
 /**
