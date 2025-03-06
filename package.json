@@ -8,13 +8,14 @@
         "build": "tsc",
         "watch": "tsc -w",
         "test": "jest --coverage --detectOpenHandles",
-        "clean": "tsc --build --clean && rm -rf coverage",
+        "clean": "tsc --build --clean && rm -rf coverage && rm -rf package && rm -rf coreutilsts-*",
         "check:format": "prettier --check .",
         "check:lint": "eslint",
         "format": "prettier --write .",
         "lint": "tsc --noEmit && eslint --fix",
         "verify": "npm run clean && npm run format && git add . && npm run check:format && npm run check:lint && npm run test && npm run clean",
-        "prepare": "husky"
+        "prepare": "husky",
+        "package": "npm run build && npm pack"
     },
     "repository": {
         "type": "git",
@@ -63,7 +64,7 @@
         ]
     },
     "files": [
-        "dist/lib",
+        "dist/src",
         "README.md"
     ]
 }
