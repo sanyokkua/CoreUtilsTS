@@ -1,7 +1,3 @@
-Below is the revised README formatted according to best documentation practices:
-
----
-
 # CoreUtilsTS
 
 CoreUtilsTS is a TypeScript utility library offering a comprehensive suite of helper functions to simplify common development tasks. Built with clarity and reusability in mind, it works seamlessly in both browser and non-browser environments.
