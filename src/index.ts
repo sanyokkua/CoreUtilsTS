@@ -53,3 +53,4 @@ export { ConsoleLogger, LibLogger, SilentLogger } from './logging/types';
 
 export * from './public/object-utils/types';
 export * from './public/string-utils/types';
+export * from './string/types';
