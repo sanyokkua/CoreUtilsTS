@@ -1,28 +1,55 @@
-export * from './aws/aws-utils';
-export * as AWS from './aws/aws-utils';
+/**
+ * Collection of utility modules for object and string manipulations, encoding/decoding operations,
+ * and hashing functions. Each module provides specific functionality such as case conversions,
+ * base64 encoding/decoding, and SHA-1 hashing.
+ */
+import { ObjectUtilsImpl } from './public/object-utils/object-utils';
+import { IObjectUtils } from './public/object-utils/types';
+import { CaseUtilsImpl } from './public/string-utils/case-utils';
+import { EncodingUtilsImpl } from './public/string-utils/encoding-utils';
+import { HashingUtilsImpl } from './public/string-utils/hashing-utils';
+import { LineUtilsImpl } from './public/string-utils/line-utils';
+import { StringUtilsImpl } from './public/string-utils/string-utils';
+import { ICaseUtils, IEncodingUtils, IHashingUtils, ILineUtils, IStringUtils } from './public/string-utils/types';
 
-export * from './clipboard/clipboard-utils';
-export * as Clipboard from './clipboard/clipboard-utils';
+/**
+ * Implementation of object utility functions providing null checks and value validations.
+ */
+export const ObjectUtils: IObjectUtils = new ObjectUtilsImpl();
 
-export * from './error/error-utils';
+/**
+ * Provides various string case manipulation methods such as capitalization and formatting.
+ */
+export const CaseUtils: ICaseUtils = new CaseUtilsImpl();
+
+/**
+ * Implements base64 encoding/decoding functionality for data transformation tasks.
+ */
+export const EncodingUtils: IEncodingUtils = new EncodingUtilsImpl();
+
+/**
+ * Handles SHA-1 hashing operations, converting input strings to secure hash values.
+ */
+export const HashingUtils: IHashingUtils = new HashingUtilsImpl();
+
+// Additional utility modules
+export const LineUtils: ILineUtils = new LineUtilsImpl();
+export const StringUtils: IStringUtils = new StringUtilsImpl();
+
+/**
+ * Error handling utilities for logging and error management across the application.
+ */
 export * as ErrorUtils from './error/error-utils';
 
-export * from './file/file-utils';
-export * as FileUtils from './file/file-utils';
-export * from './file/types';
-
-export * from './object/object-utils';
-export * as ObjectUtils from './object/object-utils';
-
-export * from './string/encoding-utils';
-export * as EncodingUtils from './string/encoding-utils';
-
-export * from './string/line-utils';
-export * as LineUtils from './string/line-utils';
-
-export * from './string/string-utils';
-export * as StringUtils from './string/string-utils';
-export * from './string/types';
-
+/**
+ * Logging configuration functions to set up or modify the global logger instance.
+ */
 export { setLogger } from './logging/logger-utils';
+
+/**
+ * Logger implementations for different output channels (console, library-specific, silent).
+ */
 export { ConsoleLogger, LibLogger, SilentLogger } from './logging/types';
+
+export * from './public/object-utils/types';
+export * from './public/string-utils/types';

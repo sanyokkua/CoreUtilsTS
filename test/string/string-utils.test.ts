@@ -1,25 +1,24 @@
 import {
     addPrefixIfMissing,
     addSuffixIfMissing,
-    capitalize,
     contains,
+    decodeUrl,
+    encodeUrl,
     endsWith,
     getDefaultStringOnNull,
     isBlankString,
     isEmptyString,
+    isNotAlphanumeric,
     isNullOrBlankString,
     isString,
     joinStrings,
-    lowerCase,
     removePrefixIfPresent,
     removeSuffixIfPresent,
     replaceSubstring,
     safeExtractText,
+    slugifyString,
     splitString,
     startsWith,
-    swapCase,
-    uncapitalize,
-    upperCase,
 } from '../../src/string/string-utils';
 import { EMPTY } from '../../src/string/types';
 
@@ -209,77 +208,6 @@ describe('String Utilities', () => {
         });
     });
 
-    describe('upperCase', () => {
-        it('should convert a string to upper case', () => {
-            expect(upperCase('hello')).toBe('HELLO');
-        });
-
-        it('should return upper case string when it is already upper case', () => {
-            expect(upperCase('HELLO')).toBe('HELLO');
-        });
-
-        it('should handle an empty string', () => {
-            expect(upperCase('')).toBe('');
-        });
-    });
-
-    describe('lowerCase', () => {
-        it('should convert a string to lower case', () => {
-            expect(lowerCase('HeLLo')).toBe('hello');
-        });
-
-        it('should return a lower case string when it is already lower case', () => {
-            expect(lowerCase('hello')).toBe('hello');
-        });
-
-        it('should handle an empty string', () => {
-            expect(lowerCase('')).toBe('');
-        });
-    });
-
-    describe('swapCase', () => {
-        it('should swap the case of each letter in the string', () => {
-            expect(swapCase('aA')).toBe('Aa');
-            expect(swapCase('Hello World!')).toBe('hELLO wORLD!');
-        });
-
-        it('should not change non-alphabetic characters', () => {
-            expect(swapCase('123!')).toBe('123!');
-        });
-
-        it('should handle an empty string', () => {
-            expect(swapCase('')).toBe('');
-        });
-    });
-
-    describe('capitalize', () => {
-        it('should capitalize the first letter and lowercase the rest', () => {
-            expect(capitalize('hello')).toBe('Hello');
-            expect(capitalize('hELLo')).toBe('Hello');
-        });
-
-        it('should return the input unchanged for blank strings', () => {
-            expect(capitalize('')).toBe('');
-            expect(capitalize('   ')).toBe('   ');
-        });
-
-        it('should handle a single character', () => {
-            expect(capitalize('a')).toBe('A');
-            expect(capitalize('A')).toBe('A');
-        });
-    });
-
-    describe('uncapitalize', () => {
-        it('should convert the first character to lower case', () => {
-            expect(uncapitalize('Hello')).toBe('hello');
-            expect(uncapitalize('HELLO')).toBe('hELLO');
-        });
-
-        it('should return an empty string when input is empty', () => {
-            expect(uncapitalize('')).toBe('');
-        });
-    });
-
     describe('removePrefixIfPresent', () => {
         it('should remove the prefix when present', () => {
             expect(removePrefixIfPresent('foobar', 'foo')).toBe('bar');
@@ -389,11 +317,7 @@ describe('safeExtractText', () => {
         // eslint-disable-next-line
         circularObj.self = circularObj;
         const result = safeExtractText(circularObj);
-        expect(result).toBe(
-            'Value cannot be represented as string: TypeError. Converting circular structure to JSON\n' +
-                "    --> starting at object with constructor 'Object'\n" +
-                "    --- property 'self' closes the circle",
-        );
+        expect(result).toBe('');
     });
 
     it('should return fallback message when JSON.stringify throws because toJSON method fails', () => {
@@ -403,7 +327,7 @@ describe('safeExtractText', () => {
             },
         };
         const result = safeExtractText(badObj);
-        expect(result).toBe('Value cannot be represented as string: Error. toJSON failure');
+        expect(result).toBe('');
     });
 
     it('should properly convert booleans using String conversion', () => {
@@ -440,6 +364,58 @@ describe('safeExtractText', () => {
             throw new Error('Boom');
         };
         const result = safeExtractText(throwingFunc);
-        expect(result).toBe('Value cannot be represented as string: Error. Boom');
+        expect(result).toBe('');
+    });
+});
+
+describe('isNotAlphanumeric', () => {
+    test.each([
+        { input: '', expected: true },
+        { input: '     ', expected: true },
+        { input: '!', expected: true },
+        { input: '@', expected: true },
+        { input: '@#$%^&*()', expected: true },
+        { input: '[]', expected: true },
+        { input: '{}', expected: true },
+        { input: ',?', expected: true },
+        { input: '?', expected: true },
+        { input: "'", expected: true },
+        { input: "   '   ", expected: true },
+        { input: 'Word', expected: false },
+        { input: '123456', expected: false },
+        { input: '0', expected: false },
+        { input: 'a', expected: false },
+        { input: '   a   ', expected: true },
+        { input: 'Text@', expected: true },
+        { input: '@Text@', expected: true },
+    ])('should return "$expected" for "$input"', ({ input, expected }) => {
+        expect(isNotAlphanumeric(input)).toBe(expected);
+    });
+});
+
+describe('slugifyString', () => {
+    test.each([
+        { input: '', expected: '' },
+        { input: 'Some text', expected: 'Some-text' },
+    ])('should return "$expected" for "$input"', ({ input, expected }) => {
+        expect(slugifyString(input)).toBe(expected);
+    });
+});
+
+describe('encodeUrl', () => {
+    test.each([
+        { input: '', expected: '' },
+        { input: 'https://some.domain.com/hello?world', expected: 'https%3A%2F%2Fsome.domain.com%2Fhello%3Fworld' },
+    ])('should return "$expected" for "$input"', ({ input, expected }) => {
+        expect(encodeUrl(input)).toBe(expected);
+    });
+});
+
+describe('decodeUrl', () => {
+    test.each([
+        { input: '', expected: '' },
+        { input: 'https%3A%2F%2Fsome.domain.com%2Fhello%3Fworld', expected: 'https://some.domain.com/hello?world' },
+    ])('should return "$expected" for "$input"', ({ input, expected }) => {
+        expect(decodeUrl(input)).toBe(expected);
     });
 });

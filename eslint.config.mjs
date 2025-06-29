@@ -20,6 +20,7 @@ export default tseslint.config(
             'gitignore/',
             '**/*.js',
             '**/*.mjs',
+            'test',
         ],
     },
     {

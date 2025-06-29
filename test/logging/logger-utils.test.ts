@@ -1,6 +1,6 @@
 import { ConsoleLoggerInstance, getLogger, setLogger, SilentLoggerInstance } from '../../src/logging/logger-utils';
 
-import { ConsoleLogger, LibLogger, SilentLogger } from '../../src/logging/types';
+import { ConsoleLogger, LibLogger, SilentLogger } from '../../src';
 
 // Mock implementation for testing custom loggers
 class MockLogger implements LibLogger {

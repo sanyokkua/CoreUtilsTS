@@ -13,6 +13,7 @@ export class SilentLogger implements LibLogger {
     info(_msg: string | null | undefined): void {
         //Nothing to do
     }
+
     // eslint-disable-next-line
     debug(_msg: string | null | undefined): void {
         //Nothing to do

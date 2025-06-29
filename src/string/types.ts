@@ -1,31 +1,4 @@
 /**
- * Enum of supported cryptographic hash algorithms.
- * These values are typically used when performing hashing operations.
- */
-export enum EncoderAlg {
-    SHA_1 = 'SHA-1',
-    SHA_256 = 'SHA-256',
-    SHA_384 = 'SHA-384',
-    SHA_512 = 'SHA-512',
-}
-
-/**
- * Enum of supported character encodings.
- * These values can be used when encoding or decoding text data.
- */
-export enum Encodings {
-    ASCII = 'ascii',
-    UTF_8 = 'utf-8',
-    UTF_16_LE = 'utf16le',
-    UCS_2 = 'ucs2',
-    BASE_64 = 'base64',
-    BASE_64_URL = 'base64url',
-    LATIN_1 = 'latin1',
-    BINARY = 'binary',
-    HEX = 'hex',
-}
-
-/**
  * Represents an empty string.
  * Useful as a constant for default string values.
  */
@@ -36,6 +9,10 @@ export const EMPTY: string = '';
  * Often used for string concatenation or formatting purposes.
  */
 export const SPACE: string = ' ';
+export const DOT = '.';
+export const SLASH = '/';
+export const DASH = '-';
+export const UNDERSCORE = '_';
 
 /**
  * Enum for commonly used line separators across different operating systems.
@@ -65,3 +42,34 @@ export enum SortingTypes {
     ASC_IGN_CASE = 'ASCENDING IGNORE CASE',
     DSC_IGN_CASE = 'DESCENDING IGNORE CASE',
 }
+
+export enum StringCaseTypes {
+    UNKNOWN = 'Unknown Case Type',
+    LOWER_CASE_STRICT = `lowercasestrict`,
+    UPPER_CASE_STRICT = `UPPERCASESTRICT`,
+    SENTENCE_CASE = `Sentence case`,
+    TITLE_CASE = `Title Case`,
+    CAMEL_CASE = `camelCase`,
+    PASCAL_CASE = `PascalCase`,
+    SNAKE_CASE = `snake_case`,
+    SCREAMING_SNAKE_CASE = `SCREAMING_SNAKE_CASE`,
+    KEBAB_CASE = `kebab-case`,
+    TRAIN_CASE = `Train-Case`,
+    DOT_CASE = `dot.case`,
+    SLASH_CASE = `slash/case`,
+    COBOL_CASE = `COBOL-CASE`,
+    LOWER_CASE = `lowercase`,
+    UPPER_CASE = `UPPERCASE`,
+}
+
+export type Validator = (input: string) => boolean;
+
+export interface TypeDetector {
+    caseType: StringCaseTypes;
+    validator: Validator;
+}
+
+export type DetermineStringCaseProps = {
+    ignoreDigits?: boolean;
+    ignoreSpecialChars?: boolean;
+};

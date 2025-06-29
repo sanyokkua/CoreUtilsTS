@@ -4,7 +4,7 @@ import {
     sortLines,
     splitLines,
     splitStringIntoLines,
-} from '../../src/string/line-utils'; // Update "./yourFile" to your actual module path
+} from '../../src/string/line-utils';
 import { SortingTypes } from '../../src/string/types';
 
 describe('splitString', () => {
