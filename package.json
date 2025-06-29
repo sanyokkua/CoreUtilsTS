@@ -1,6 +1,6 @@
 {
     "name": "coreutilsts",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "Library with some utility functions",
     "main": "dist/src/index.js",
     "types": "dist/src/index.d.ts",
@@ -50,8 +50,10 @@
         "typescript-eslint": "^8.26.0"
     },
     "dependencies": {
-        "copy-to-clipboard": "^3.3.3",
-        "file-saver": "^2.0.5"
+        "crc": "^4.3.2",
+        "js-base64": "^3.7.7",
+        "js-md5": "^0.8.3",
+        "slugify": "^1.6.6"
     },
     "prettier": {
         "printWidth": 120,
